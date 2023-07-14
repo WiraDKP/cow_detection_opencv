@@ -12,7 +12,7 @@ class CowDetection:
         
     def predict(self, image, min_confidence=0.3, max_iou=0.3):
         # Feedforward
-        blob = cv2.dnn.blobFromImage(image, size=(300, 300), swapRB=True, crop=False)
+        blob = cv2.dnn.blobFromImage(image, size=(300, 300), swapRB=False, crop=False)
         self.net.setInput(blob)
         detections = self.net.forward()
         

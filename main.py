@@ -11,7 +11,7 @@ if __name__ == "__main__":
 
     for frame in media.read():
         # Perform Detection
-        bbox, labels, scores = model.predict(frame[..., ::-1], min_confidence=cfg.MIN_CONF, max_iou=cfg.MAX_IOU)
+        bbox, labels, scores = model.predict(frame, min_confidence=cfg.MIN_CONF, max_iou=cfg.MAX_IOU)
         # Draw Bounding Box
         frame = model.draw(frame, bbox, labels, scores)
         # Visualize
