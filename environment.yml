@@ -6,12 +6,14 @@ channels:
 
 dependencies:
 # Essential
-- python==3.7.6
-- pip==19.3.1
+- python==3.10.4
+- pip==23.1.2
+- ipywidgets==8.0.7
 # Data Science
-- numpy==1.18.1
+- numpy==1.25.1
+
 
 - pip:
   # Computer Vision
-  - opencv-python==4.2.0.34
-  - jcopvision
+  - opencv-python==4.7.0.72
+  - jcopvision==0.2.5
