@@ -10,9 +10,12 @@ if __name__ == "__main__":
     create_sized_window(500, media.aspect_ratio, cfg.WINDOW_NAME)
 
     for frame in media.read():
-        bbox, labels, scores = model.predict(frame, min_confidence=cfg.MIN_CONF, max_iou=cfg.MAX_IOU)
+        # Perform Detection
+        bbox, labels, scores = model.predict(frame[..., ::-1], min_confidence=cfg.MIN_CONF, max_iou=cfg.MAX_IOU)
+        # Draw Bounding Box
         frame = model.draw(frame, bbox, labels, scores)
-        cv2.imshow(cfg.WINDOW_NAME, frame)
+        # Visualize
+        cv2.imshow(cfg.WINDOW_NAME, frame[..., ::-1])
 
         if key_pressed("q"):
             break

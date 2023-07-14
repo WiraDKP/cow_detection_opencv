@@ -1,7 +1,8 @@
 import cv2
 import numpy as np
-from jcopvision.draw import draw_bbox
-from jcopvision.utils import nms
+from jcopvision.utils.bbox import denormalize_bbox
+from jcopvision.draw import draw_single_bbox
+from jcopvision.utils import non_max_suppression
 
 
 class CowDetection:
@@ -22,15 +23,16 @@ class CowDetection:
         boxes = np.clip(result[:, 2:], 0, 1)
 
         # NMS
-        idxs = nms(boxes, scores, max_iou)
+        idxs = non_max_suppression(boxes, scores, max_iou)
         boxes = boxes[idxs]
         labels = self.labels[label_ids[idxs]]
         scores = scores[idxs]
         return boxes, labels, scores
     
     def draw(self, frame, bbox, labels, scores):
-        for (x1, y1, x2, y2), label, conf in zip(bbox, labels, scores):
-            frame = draw_bbox(frame, (x1, y1), (x2, y2), (0, 255, 255), label.title(), conf, thickness=2)
+        bbox = denormalize_bbox(frame, bbox)
+        for box, label, conf in zip(bbox, labels, scores):
+            frame = draw_single_bbox(frame, box, "yellow", label.title(), conf, thickness=2)
         return frame
     
     @staticmethod
